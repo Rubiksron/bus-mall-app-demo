@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="chart.js"></script>
+  <meta charset="utf-8">
+  <title>BusMall</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<header>
+  <h1>Please click on the product that interests you most. After 15 selections you can view the results.</h1>
+</header>
+<body>
+  <section id="image-container">
+    <img id="left" src="">
+    <img id="center" src="">
+    <img id="right" src="">
+  </section>
+  <div id="button-container">
+    <button id="clear-local-storage" hidden="true">clear local storage</button>
+    <button id="show-table" hidden="true">show table</button>
+    <button id="show-chart" hidden="true">show chart</button>
+    <button id="reset" hidden="true">reset</button>
+  </div>
+  <table id="table-dynamic" hidden("true")></table>
+  <canvas id="canvas" width="1200" height="400" hidden="true"></canvas>
+  <script src="app.js"></script>
+</body>
+<footer>
+  <h1>--Thank You for Participating--</h1>
+</footer>
+</html>

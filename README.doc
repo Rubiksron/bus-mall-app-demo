@@ -1,0 +1,6 @@
+User stories:
+
+As a developer, I want to provide a survey for a company that wishes to find out which new products would be best to invest in.  I want to create a application that is of a simple layout, to better highlight the products. I want to make certain that the same two products are not on the page at once, and I want the color scheme to match most of the products.
+As a developer, I want to use object oriented programming to build this site, so that the site will be more effective and the code will be easier to read and understand. I will use Javascript to dynamically populate the html page through multiple functions that will work in harmony.
+
+As a user, I want a functional, well organized webpage that displays my data in a user friendly fashion.  As a user, I want my data compiled so that I can see my product reviews, and better understand the demand, also I need the information collected and stored in a streamlined fashion.
