@@ -29,7 +29,7 @@ var makeRandomNumber = function() {
   return Math.floor(Math.random() * Product.names.length);
 };
 //this function ensures that no duplicates are displayed
-Product.prototype.displayPics = function() {
+var displayPics = function() {
   var randomImages = [];
 
   randomImages[0] = makeRandomNumber();
@@ -53,9 +53,9 @@ Product.prototype.displayPics = function() {
   }
 };
 //checks to see if totalClicks equals 5
-Product.prototype.handleClick = function(event) {
+var handleClick = function(event) {
   if(Product.totalClicks >= 5) {
-    Product.container.removeEventListener('click', Product.prototype.handleClick);
+    Product.container.removeEventListener('click', handleClick);
     Product.container.setAttribute('hidden', true);
     console.log('data transfering to local storage');
     //hiding the images after the survey has been completed
@@ -65,8 +65,8 @@ Product.prototype.handleClick = function(event) {
     //showing the once hidden canvas and making the chart and table
     Product.btnClearLS.removeAttribute('hidden');
     canvas.removeAttribute('hidden');
-    Product.prototype.makeTable();
-    Product.prototype.makeChart();
+    makeTable();
+    makeChart();
   }
   //warn the user they missed the mark
   if (event.target.id === 'image-container') {
@@ -83,16 +83,16 @@ Product.prototype.handleClick = function(event) {
   //save to localStorage here!
   localStorage.totalClicks = JSON.stringify(Product.all);
   //display pics if totalClicks is less than 5
-  Product.prototype.displayPics();
+  displayPics();
 };
 //clear localStorage
-Product.prototype.handleLocalStorage = function() {
+var handleLocalStorage = function() {
   localStorage.clear();
   console.log('local storage has been cleared.');
   window.location.reload();
 };
 //make a table to display the data
-Product.prototype.makeTable = function() {
+var makeTable = function() {
   var thEl = document.createElement('th');
   thEl.textContent = 'Products';
   Product.tableDynamicEl.appendChild(thEl);
@@ -102,7 +102,6 @@ Product.prototype.makeTable = function() {
     thEl.textContent = Product.all[i].name + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views';
     Product.tableDynamicEl.appendChild(thEl);
   }
-
 };
 //storing the individual properties of the Products selected to display in chart
 Product.namesData = [];
@@ -124,8 +123,8 @@ Product.data = {
     }
   ]
 };
-
-Product.prototype.makeChart = function() {
+//make chart
+var makeChart = function() {
   for (var i = 0; i < Product.all.length; i++) {
     Product.namesData.push(Product.all[i].name);
     Product.votesData.push(Product.all[i].votes);
@@ -142,6 +141,6 @@ Product.prototype.makeChart = function() {
   }
 })();
 
-Product.container.addEventListener('click', Product.prototype.handleClick);
-Product.btnClearLS.addEventListener('click', Product.prototype.handleLocalStorage)
-Product.prototype.displayPics();
+Product.container.addEventListener('click', handleClick);
+Product.btnClearLS.addEventListener('click', handleLocalStorage)
+displayPics();
