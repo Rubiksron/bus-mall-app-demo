@@ -34,13 +34,10 @@ header {
   justify-content: space-around;
 }
 #image-container {
-  border: solid .25em black;
   border-radius: .5em;
   display: flex;
   justify-content: space-around;
   padding: 1em;
-  background-color: grey;
-  border: 1em solid black;
 }
 img {
   border-radius: 1em;
