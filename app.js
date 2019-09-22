@@ -8,10 +8,10 @@ Product.btnClearLS = document.getElementById('clear-local-storage');
 Product.container = document.getElementById('image-container');
 Product.tableDynamicEl = document.getElementById('table-dynamic');
 Product.pics = [document.getElementById('left'),
-document.getElementById('center'),
-document.getElementById('right')];
-Product.tally = document.getElementById('tally');
+                document.getElementById('center'),
+                document.getElementById('right')];
 Product.totalClicks = 0;
+
 //Product constructor
 function Product(name) {
   this.name = name;
@@ -20,14 +20,17 @@ function Product(name) {
   this.views = 0;
   Product.all.push(this);
 }
+
 //instantiate the Products through the constructor
 for( var i = 0; i < Product.names.length; i++ ) {
   new Product(Product.names[i]);
 }
+
 //creates a random number
 var makeRandomNumber = function() {
   return Math.floor(Math.random() * Product.names.length);
 };
+
 //this function ensures that no duplicates are displayed
 var displayPics = function() {
   var randomImages = [];
@@ -52,12 +55,12 @@ var displayPics = function() {
     Product.justViewed[i] = randomImages[i];
   }
 };
+
 //checks to see if totalClicks equals 5
 var handleClick = function(event) {
   if(Product.totalClicks >= 5) {
     Product.container.removeEventListener('click', handleClick);
     Product.container.setAttribute('hidden', true);
-    console.log('data transfering to local storage');
     //hiding the images after the survey has been completed
     for( var i = 0; i < 3; i++ ){
       Product.pics[i].setAttribute('hidden', true);
@@ -82,15 +85,18 @@ var handleClick = function(event) {
   }
   //save to localStorage here!
   localStorage.totalClicks = JSON.stringify(Product.all);
+  console.log('Transfering this data to LC: ', Product.all );
   //display pics if totalClicks is less than 5
   displayPics();
 };
+
 //clear localStorage
 var handleLocalStorage = function() {
   localStorage.clear();
   console.log('local storage has been cleared.');
   window.location.reload();
 };
+
 //make a table to display the data
 var makeTable = function() {
   var thEl = document.createElement('th');
@@ -103,10 +109,12 @@ var makeTable = function() {
     Product.tableDynamicEl.appendChild(thEl);
   }
 };
+
 //storing the individual properties of the Products selected to display in chart
 Product.namesData = [];
 Product.votesData = [];
 Product.viewsData = [];
+
 //data object which is to be passed into the .Bar() which is chained to the new instance
 Product.data = {
   labels: Product.namesData,
@@ -140,6 +148,7 @@ var makeChart = function() {
   new Chart(Product.getChart).Bar(Product.data);
 };
 
+//anonymous function that will check Local Storage for totalClicks and assign the value to Product.all array
 (function() {
   if(localStorage.totalClicks) {
     Product.all = JSON.parse(localStorage.totalClicks);
@@ -147,6 +156,7 @@ var makeChart = function() {
   }
 })();
 
+//event listeners
 Product.container.addEventListener('click', handleClick);
 Product.btnClearLS.addEventListener('click', handleLocalStorage)
 displayPics();
