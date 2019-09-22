@@ -123,13 +123,19 @@ Product.data = {
     }
   ]
 };
-//make chart
-var makeChart = function() {
+
+//gather all data and push it into separate arrays to feed the chart function
+var getChartData = function() {
   for (var i = 0; i < Product.all.length; i++) {
     Product.namesData.push(Product.all[i].name);
     Product.votesData.push(Product.all[i].votes);
     Product.viewsData.push(Product.all[i].views);
   }
+}
+
+//make chart
+var makeChart = function() {
+  getChartData();
   Product.getChart = document.getElementById('canvas').getContext('2d');
   new Chart(Product.getChart).Bar(Product.data);
 };
