@@ -1,18 +1,18 @@
 'use strict';
 
+//global variables
 Product.names = ['bag.jpg', 'banana.jpg', 'boots.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'pen.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
-
 Product.all = [];
 Product.justViewed = [];
 Product.btnClearLS = document.getElementById('clear-local-storage');
 Product.container = document.getElementById('image-container');
 Product.tableDynamicEl = document.getElementById('table-dynamic');
 Product.pics = [document.getElementById('left'),
-                document.getElementById('center'),
-                document.getElementById('right')];
+document.getElementById('center'),
+document.getElementById('right')];
 Product.tally = document.getElementById('tally');
 Product.totalClicks = 0;
-
+//Product constructor
 function Product(name) {
   this.name = name;
   this.path = 'images/' + name;
@@ -20,30 +20,31 @@ function Product(name) {
   this.views = 0;
   Product.all.push(this);
 }
+//instantiate the Products through the constructor
 for( var i = 0; i < Product.names.length; i++ ) {
   new Product(Product.names[i]);
 }
-
-Product.prototype.makeRandomNumber = function() {
+//creates a random number
+var makeRandomNumber = function() {
   return Math.floor(Math.random() * Product.names.length);
 };
-
+//this function ensures that no duplicates are displayed
 Product.prototype.displayPics = function() {
   var randomImages = [];
 
-  randomImages[0] = Product.prototype.makeRandomNumber();
-  randomImages[1] = Product.prototype.makeRandomNumber();
+  randomImages[0] = makeRandomNumber();
+  randomImages[1] = makeRandomNumber();
 
   while(randomImages[0] === randomImages[1]){
     console.log('Duplicate Found');
-    randomImages[1] = Product.prototype.makeRandomNumber();
+    randomImages[1] = makeRandomNumber();
   }
-  randomImages[2] = Product.prototype.makeRandomNumber();
+  randomImages[2] = makeRandomNumber();
   while(randomImages[2] === randomImages[1] || randomImages[2] === randomImages[0]){
     console.log('Duplicate Found');
-    randomImages[2] = Product.prototype.makeRandomNumber();
+    randomImages[2] = makeRandomNumber();
   }
-
+  //using the randomImages array numbers to assign the source a path and a name to the Products in the Products.pics array
   for( var i = 0; i < 3; i++ ) {
     Product.pics[i].src = Product.all[randomImages[i]].path;
     Product.pics[i].id = Product.all[randomImages[i]].name;
@@ -51,25 +52,28 @@ Product.prototype.displayPics = function() {
     Product.justViewed[i] = randomImages[i];
   }
 };
-
+//checks to see if totalClicks equals 5
 Product.prototype.handleClick = function(event) {
-  console.log(Product.totalClicks, 'total clicks');
   if(Product.totalClicks >= 5) {
     Product.container.removeEventListener('click', Product.prototype.handleClick);
     Product.container.setAttribute('hidden', true);
     console.log('data transfering to local storage');
+    //hiding the images after the survey has been completed
     for( var i = 0; i < 3; i++ ){
       Product.pics[i].setAttribute('hidden', true);
     }
+    //showing the once hidden canvas and making the chart and table
     Product.btnClearLS.removeAttribute('hidden');
     canvas.removeAttribute('hidden');
     Product.prototype.makeTable();
     Product.prototype.makeChart();
   }
+  //warn the user they missed the mark
   if (event.target.id === 'image-container') {
     return alert('Click on an image!');
   }
   Product.totalClicks += 1;
+  //loop over the Product array to compare which Product was clicked, then assign a vote to that Product
   for(var i = 0; i < Product.names.length; i++){
     if(event.target.id === Product.all[i].name) {
       Product.all[i].votes += 1;
@@ -78,14 +82,16 @@ Product.prototype.handleClick = function(event) {
   }
   //save to localStorage here!
   localStorage.totalClicks = JSON.stringify(Product.all);
+  //display pics if totalClicks is less than 5
   Product.prototype.displayPics();
 };
-
+//clear localStorage
 Product.prototype.handleLocalStorage = function() {
   localStorage.clear();
   console.log('local storage has been cleared.');
+  window.location.reload();
 };
-
+//make a table to display the data
 Product.prototype.makeTable = function() {
   var thEl = document.createElement('th');
   thEl.textContent = 'Products';
@@ -98,23 +104,11 @@ Product.prototype.makeTable = function() {
   }
 
 };
-
+//storing the individual properties of the Products selected to display in chart
 Product.namesData = [];
 Product.votesData = [];
 Product.viewsData = [];
-
-Product.prototype.makeChart = function() {
-  for (var i = 0; i < Product.all.length; i++) {
-    Product.namesData.push(Product.all[i].name);
-    Product.votesData.push(Product.all[i].votes);
-    Product.viewsData.push(Product.all[i].views);
-  }
-
-  Product.getChart = document.getElementById('canvas').getContext('2d');
-  // eslint-disable-next-line no-undef
-  new Chart(Product.getChart).Bar(Product.data);
-};
-
+//data object which is to be passed into the .Bar() which is chained to the new instance
 Product.data = {
   labels: Product.namesData,
   datasets: [
@@ -129,6 +123,16 @@ Product.data = {
       data: Product.votesData
     }
   ]
+};
+
+Product.prototype.makeChart = function() {
+  for (var i = 0; i < Product.all.length; i++) {
+    Product.namesData.push(Product.all[i].name);
+    Product.votesData.push(Product.all[i].votes);
+    Product.viewsData.push(Product.all[i].views);
+  }
+  Product.getChart = document.getElementById('canvas').getContext('2d');
+  new Chart(Product.getChart).Bar(Product.data);
 };
 
 (function() {
