@@ -43,7 +43,7 @@ Product.prototype.displayPics = function() {
     console.log('Duplicate Found');
     randomImages[2] = Product.prototype.makeRandomNumber();
   }
-  
+
   for( var i = 0; i < 3; i++ ) {
     Product.pics[i].src = Product.all[randomImages[i]].path;
     Product.pics[i].id = Product.all[randomImages[i]].name;
@@ -54,10 +54,9 @@ Product.prototype.displayPics = function() {
 
 Product.prototype.handleClick = function(event) {
   console.log(Product.totalClicks, 'total clicks');
-  if(Product.totalClicks > 2) {
+  if(Product.totalClicks >= 5) {
     Product.container.removeEventListener('click', Product.prototype.handleClick);
     Product.container.setAttribute('hidden', true);
-    localStorage.setItem('totalClicks', JSON.stringify(Product.all));
     console.log('data transfering to local storage');
     for( var i = 0; i < 3; i++ ){
       Product.pics[i].setAttribute('hidden', true);
@@ -77,6 +76,8 @@ Product.prototype.handleClick = function(event) {
       console.log(event.target.id + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views');
     }
   }
+  //save to localStorage here!
+  localStorage.totalClicks = JSON.stringify(Product.all);
   Product.prototype.displayPics();
 };
 
@@ -130,10 +131,12 @@ Product.data = {
   ]
 };
 
-if(localStorage.totalClicks) {
-  Product.all = JSON.parse(localStorage.totalClicks);
-  console.log('data received from local storage.');
-}
+(function() {
+  if(localStorage.totalClicks) {
+    Product.all = JSON.parse(localStorage.totalClicks);
+    console.log('data received from local storage.');
+  }
+})();
 
 Product.container.addEventListener('click', Product.prototype.handleClick);
 Product.btnClearLS.addEventListener('click', Product.prototype.handleLocalStorage)
