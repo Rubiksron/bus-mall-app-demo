@@ -58,9 +58,11 @@ var displayPics = function() {
 
 //checks to see if totalClicks equals 5
 var handleClick = function(event) {
+  //check to see if totalClicks is more than 5
   if(Product.totalClicks >= 5) {
     Product.container.removeEventListener('click', handleClick);
     Product.container.setAttribute('hidden', true);
+
     //hiding the images after the survey has been completed
     for( var i = 0; i < 3; i++ ){
       Product.pics[i].setAttribute('hidden', true);

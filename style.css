@@ -1,33 +1,45 @@
 
 table {
   width: 100%;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 td, th {
+  box-shadow: .25em .25em .25em black;
+  border-radius: .25em;
+  border-style: double;
+  background-image: linear-gradient(white, grey, white);
   border: solid 1px black;
   background-color: white;
   text-align: center;
+  padding: .25em;
 }
 button {
-  margin: 1em;
-  align-items: center;
-  width: 10em;
-  height: 2em;
-  font-size: 1.5em;
-  border-radius: .5em;
+  box-shadow: .25em .25em .25em black;
+  border-style: double;
+  border-radius: .25em;
+  font-size: 1.25em;
+  margin-bottom: 2em;
 }
 body {
-  background-color: olive;
+  background-image: linear-gradient(lightgrey, grey, lightgrey);
+  background-color: #cccccc;
   padding: .5em;
   padding-top: 3em;
+  background: url("../images/bus.png") left top no-repeat;
+  background-size: cover;
 }
 header {
-  border-radius: .5em;
-  font-size: 1.5em;
-  background-color: black;
-  color: white;
-  padding: .5em;
+  opacity: .9;
+  font-size: 1em;
+  border-radius: .25em;
+  border-style: double;
+  background-image: linear-gradient(black, grey, black);
+  color: whitesmoke;
+  padding: .25em;
   text-align: center;
   margin-bottom: .5em;
+  box-shadow: .5em .5em .5em black;
 }
 #button-container {
   display: flex;
@@ -44,26 +56,36 @@ img {
   height: 20em;
   width: 20em;
   background-color: lavender;
-  border-style: solid;
+  border-style: double;
+  box-shadow: .5em .5em .5em black;
+  margin-top: 5em;
+}
+.hover:hover {
+  border: red 2px solid;
 }
 #canvas {
+  width: 100%;
+  background-image: linear-gradient(black, orange, black);
   margin: .5em;
-  border-radius: 1em;
-  align-self: auto;
+  border-radius: .25em;
+  border-style: double;
   background-color: white;
-  border: 1em solid black;
+  box-shadow: .5em .5em .5em black;
 }
 footer {
-  border-radius: .5em;
-  font-size: 1.5em;
-  background-color: black;
-  color: white;
-  padding: .5em;
-  text-align: center;
-  margin-top: .5em;
-}
-h1 {
+  opacity: .9;
+  box-shadow: .5em .5em .5em black;
+  border-style: double;
   border-radius: .25em;
-  background-color: grey;
-  padding: .5em;
+  font-size: 1em;
+  background-image: linear-gradient(black, grey, black);
+  color: whitesmoke;
+  text-align: center;
+  padding: .25em;
+  margin-top: .5em;
+  margin-bottom: 2em;
+}
+#clear-local-storage:hover {
+  background-color: lightgrey;
+  border: red 1px solid;
 }
