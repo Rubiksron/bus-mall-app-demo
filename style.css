@@ -25,7 +25,6 @@ body {
   background-color: #cccccc;
   padding: .5em;
   padding-top: 3em;
-  /* background: url("../images/bus.png") left top no-repeat; */
   background-image: linear-gradient(darkgrey, white);
   background-size: cover;
 }

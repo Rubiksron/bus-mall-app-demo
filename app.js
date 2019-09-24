@@ -82,7 +82,6 @@ var handleClick = function(event) {
   if(Product.totalClicks >= 5) {
     Product.container.removeEventListener('click', handleClick);
     Product.container.setAttribute('hidden', true);
-
     //hiding the images after the survey has been completed
     for( var i = 0; i < 3; i++ ){
       Product.pics[i].setAttribute('hidden', true);
@@ -137,6 +136,14 @@ Product.namesData = [];
 Product.votesData = [];
 Product.viewsData = [];
 
+//gather all data and push it into separate arrays to feed the chart function
+var getChartData = function() {
+  for (var i = 0; i < Product.all.length; i++) {
+    Product.namesData.push(Product.all[i].name);
+    Product.votesData.push(Product.all[i].votes);
+    Product.viewsData.push(Product.all[i].views);
+  }
+}
 //data object which is to be passed into the .Bar() method which is chained to the new instance of Chart
 Product.data = {
   labels: Product.namesData,
@@ -154,14 +161,6 @@ Product.data = {
   ]
 };
 
-//gather all data and push it into separate arrays to feed the chart function
-var getChartData = function() {
-  for (var i = 0; i < Product.all.length; i++) {
-    Product.namesData.push(Product.all[i].name);
-    Product.votesData.push(Product.all[i].votes);
-    Product.viewsData.push(Product.all[i].views);
-  }
-}
 
 //make chart
 var makeChart = function() {
