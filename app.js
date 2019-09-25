@@ -8,8 +8,8 @@ Product.btnClearLS = document.getElementById('clear-local-storage');
 Product.container = document.getElementById('image-container');
 Product.tableDynamicEl = document.getElementById('table-dynamic');
 Product.pics = [document.getElementById('left'),
-                document.getElementById('center'),
-                document.getElementById('right')];
+  document.getElementById('center'),
+  document.getElementById('right')];
 Product.totalClicks = 0;
 
 //Product constructor, path is concatenating the image folder with the name and extension of the products, then is set as the src path in html
@@ -21,10 +21,10 @@ function Product(name) {
   Product.all.push(this);
 }
 
-//instantiate the Products through the constructor
-for( var i = 0; i < Product.names.length; i++ ) {
-  new Product(Product.names[i]);
-}
+// //instantiate the Products through the constructor
+// for( var i = 0; i < Product.names.length; i++ ) {
+//   new Product(Product.names[i]);
+// }
 
 //creates a random number between 0 and 1 exclusive, meaning 1 is above the limit and 0 is below the limit
 var makeRandomNumber = function() {
@@ -128,7 +128,7 @@ var makeTable = function() {
   Product.tableDynamicEl.appendChild(thEl);
 
   for(var i = 0; i < Product.all.length; i++) {
-    var thEl = document.createElement('th');
+    thEl = document.createElement('th');
     thEl.textContent = Product.all[i].name + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views';
     Product.tableDynamicEl.appendChild(thEl);
   }
@@ -171,14 +171,30 @@ var makeChart = function() {
   new Chart(Product.getChart).Bar(Product.data);
 };
 
-//anonymous function that will check Local Storage for totalClicks and assign the value to Product.all array
+//anonymous function that will check Local Storage for userData and assign the value to Product.all array, if not instantiate the Products
 (function() {
   if(localStorage.userData) {
-    Product.all = JSON.parse(localStorage.userData);
+    var parsedUserData = JSON.parse(localStorage.userData);
+    for( var i = 0; i < parsedUserData.length; i++ ) {
+      new Product(Product.names[i]);
+      console.log('Product.all: ', Product.all);
+    }
+    console.log('inside if statement: ', parsedUserData);
+    Product.all = parsedUserData;
+
+  } else {
+    //instantiate the Products through the constructor
+    for( var i = 0; i < Product.names.length; i++ ) {
+      new Product(Product.names[i]);
+      console.log('else statement - Product.names[i]: ', Product.names[i]);
+    }
   }
+  console.log('outside both statements: ', Product.all );
+
 })();
 
 //event listeners
 Product.container.addEventListener('click', handleClick);
 Product.btnClearLS.addEventListener('click', handleLocalStorage);
 displayPics();
+
