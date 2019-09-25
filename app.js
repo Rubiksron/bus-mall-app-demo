@@ -12,10 +12,10 @@ Product.pics = [document.getElementById('left'),
                 document.getElementById('right')];
 Product.totalClicks = 0;
 
-//Product constructor, path is concatenating the image folder with the name and extension of the products, then is set as the path
+//Product constructor, path is concatenating the image folder with the name and extension of the products, then is set as the src path in html
 function Product(name) {
   this.name = name;
-  this.path = 'images/' + name;
+  this.path = `images/${name}`;
   this.votes = 0;
   this.views = 0;
   Product.all.push(this);
@@ -69,15 +69,14 @@ function displayPics() {
   for( var i = 0; i < Product.uniqueArray.length; i++ ) {
   //value of the first index of the array is removed and set as the variable 'temp' and replaced at each iteration of the loop
     var temp = Product.uniqueArray.shift();
-    console.log('The Temp is: ', temp);
+    console.log('The Temp is #: ', temp);
     //sets the path of the product at the current index
     Product.pics[i].src = Product.all[temp].path;
     //sets the id of the product at the current index
     Product.pics[i].id = Product.all[temp].name;
     Product.all[temp].views += 1;
+    console.log('Product.all[temp].name: ', Product.all[temp].name);
   }
-  console.log('Product.all[temp].name: ', Product.all[temp].name);
-  console.log('Product.all[temp].path: ', Product.all[temp].path);
   console.log('remaining values in uniqueArray: ', Product.uniqueArray);
 }
 
