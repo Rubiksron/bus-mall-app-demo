@@ -44,7 +44,7 @@ var makeRandomNumber = function() {
 //   }
 //   //creating the 3rd number in the array and ensuring that it does not match the previous 2 indexes
 //   randomImages[2] = makeRandomNumber();
-//   while(randomImages[2] === randomImages[1] || randomImages[2] === randomImages[0]){
+//   while(randomImages[2] === randomImages[1] || randomImages[2] === randomImages[0] ){
 //     console.log('Duplicate Found');
 //     randomImages[2] = makeRandomNumber();
 //   }
@@ -57,7 +57,7 @@ var makeRandomNumber = function() {
 // };
 
 function displayPics() {
- //keeps the array filled with 6 unique value, always
+  //keeps the array filled with 6 unique values
   while(Product.uniqueArray.length < 6) {
     var random = makeRandomNumber();
     while(!Product.uniqueArray.includes(random)) {
@@ -67,14 +67,19 @@ function displayPics() {
   }
   console.log('uniqueArray completed!!: ', Product.uniqueArray);
   for( var i = 0; i < Product.uniqueArray.length; i++ ) {
-   //value of the first index of the array is removed and set as the variable 'temp' and replaced at each iteration of the loop
+  //value of the first index of the array is removed and set as the variable 'temp' and replaced at each iteration of the loop
     var temp = Product.uniqueArray.shift();
+    console.log('The Temp is: ', temp);
+    //sets the path of the product at the current index
     Product.pics[i].src = Product.all[temp].path;
+    //sets the id of the product at the current index
     Product.pics[i].id = Product.all[temp].name;
     Product.all[temp].views += 1;
   }
+  console.log('Product.all[temp].name: ', Product.all[temp].name);
+  console.log('Product.all[temp].path: ', Product.all[temp].path);
   console.log('remaining values in uniqueArray: ', Product.uniqueArray);
-};
+}
 
 //checks to see if totalClicks equals 5
 var handleClick = function(event) {
@@ -98,7 +103,7 @@ var handleClick = function(event) {
   }
   Product.totalClicks += 1;
   //loop over the Product array to compare which Product was clicked, then assign a vote to that Product
-  for(var i = 0; i < Product.names.length; i++){
+  for( var i = 0; i < Product.names.length; i++){
     if(event.target.id === Product.all[i].name) {
       Product.all[i].votes += 1;
       // console.log(event.target.id + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views');
@@ -143,7 +148,7 @@ var getChartData = function() {
     Product.votesData.push(Product.all[i].votes);
     Product.viewsData.push(Product.all[i].views);
   }
-}
+};
 //data object which is to be passed into the .Bar() method which is chained to the new instance of Chart
 Product.data = {
   labels: Product.namesData,
@@ -161,7 +166,6 @@ Product.data = {
   ]
 };
 
-
 //make chart
 var makeChart = function() {
   getChartData();
@@ -173,11 +177,10 @@ var makeChart = function() {
 (function() {
   if(localStorage.totalClicks) {
     Product.all = JSON.parse(localStorage.totalClicks);
-    console.log('data received from local storage.');
   }
 })();
 
 //event listeners
 Product.container.addEventListener('click', handleClick);
-Product.btnClearLS.addEventListener('click', handleLocalStorage)
+Product.btnClearLS.addEventListener('click', handleLocalStorage);
 displayPics();
