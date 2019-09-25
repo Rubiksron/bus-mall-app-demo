@@ -109,8 +109,7 @@ var handleClick = function(event) {
     }
   }
   //save to localStorage here!
-  localStorage.totalClicks = JSON.stringify(Product.all);
-  console.log('Transfering this data to LC: ', Product.all );
+  localStorage.userData = JSON.stringify(Product.all);
   //display pics if totalClicks is less than 5
   displayPics();
 };
@@ -174,8 +173,8 @@ var makeChart = function() {
 
 //anonymous function that will check Local Storage for totalClicks and assign the value to Product.all array
 (function() {
-  if(localStorage.totalClicks) {
-    Product.all = JSON.parse(localStorage.totalClicks);
+  if(localStorage.userData) {
+    Product.all = JSON.parse(localStorage.userData);
   }
 })();
 
