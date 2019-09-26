@@ -177,19 +177,14 @@ var makeChart = function() {
     var parsedUserData = JSON.parse(localStorage.userData);
     for( var i = 0; i < parsedUserData.length; i++ ) {
       new Product(Product.names[i]);
-      console.log('Product.all: ', Product.all);
     }
-    console.log('inside if statement: ', parsedUserData);
-    Product.all = parsedUserData;
-
   } else {
     //instantiate the Products through the constructor
-    for( var i = 0; i < Product.names.length; i++ ) {
-      new Product(Product.names[i]);
-      console.log('else statement - Product.names[i]: ', Product.names[i]);
+    for( var c = 0; c < Product.names.length; c++ ) {
+      new Product(Product.names[c]);
     }
   }
-  console.log('outside both statements: ', Product.all );
+  console.log('PRODUCT.ALL: ', Product.all );
 
 })();
 
