@@ -21,6 +21,10 @@ function Product(name) {
   Product.all.push(this);
 }
 
+// Product.prototype.testingPrototype = function() {
+//   console.log('as a prototype i am now attached to each products prototype');
+// };
+
 //creates a random number between 0 and 1 exclusive, meaning 1 is above the limit and 0 is below the limit
 var makeRandomNumber = function() {
   return Math.floor(Math.random() * Product.names.length);
@@ -42,6 +46,8 @@ function displayPics() {
     console.log('The Temp is #: ', temp);
     //sets the path of the product at the current index
     Product.pics[i].src = Product.all[temp].path;
+    //sets the id of the product at the current index
+    Product.pics[i].id = Product.all[temp].name;
     Product.all[temp].views += 1;
     console.log('Product.all[temp].name: ', Product.all[temp].name);
   }
