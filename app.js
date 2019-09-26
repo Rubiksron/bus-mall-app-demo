@@ -42,8 +42,6 @@ function displayPics() {
     console.log('The Temp is #: ', temp);
     //sets the path of the product at the current index
     Product.pics[i].src = Product.all[temp].path;
-    //sets the id of the product at the current index
-    Product.pics[i].id = Product.all[temp].name;
     Product.all[temp].views += 1;
     console.log('Product.all[temp].name: ', Product.all[temp].name);
   }
