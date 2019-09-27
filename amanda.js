@@ -13,18 +13,13 @@ Product.pics = [document.getElementById('left'),
 Product.totalClicks = 0;
 
 //Product constructor, path is concatenating the image folder with the name and extension of the products, then is set as the src path in html
-function Product(name, votes=0, views=0) {
+function Product(name, votes = 0, views = 0) {
   this.name = name;
   this.path = `images/${name}`;
   this.votes = votes;
   this.views = views;
   Product.all.push(this);
 }
-
-// //instantiate the Products through the constructor
-// for( var i = 0; i < Product.names.length; i++ ) {
-//   new Product(Product.names[i]);
-// }
 
 //creates a random number between 0 and 1 exclusive, meaning 1 is above the limit and 0 is below the limit
 var makeRandomNumber = function() {
@@ -80,6 +75,7 @@ function displayPics() {
   console.log('remaining values in uniqueArray: ', Product.uniqueArray);
 }
 
+
 //checks to see if totalClicks equals 5
 var handleClick = function(event) {
   //check to see if totalClicks is more than 5
@@ -102,14 +98,14 @@ var handleClick = function(event) {
   }
   Product.totalClicks += 1;
   //loop over the Product array to compare which Product was clicked, then assign a vote to that Product
-  for( var i = 0; i < Product.names.length; i++){
-    if(event.target.id === Product.all[i].name) {
-      Product.all[i].votes += 1;
-      // console.log(event.target.id + ' has ' + Product.all[i].votes + ' votes in ' + Product.all[i].views + ' views');
+  for( var c = 0; c < Product.names.length; c++){
+    if(event.target.id === Product.all[c].name) {
+      Product.all[c].votes += 1;
+      // console.log(event.target.id + ' has ' + Product.all[c].votes + ' votes in ' + Product.all[c].views + ' views');
     }
   }
   //save to localStorage here!
-  localStorage.userData = JSON.stringify(Product.all);
+  localStorage.setItem('userData', JSON.stringify(Product.all));
   //display pics if totalClicks is less than 5
   displayPics();
 };
@@ -117,7 +113,6 @@ var handleClick = function(event) {
 //clear localStorage
 var handleLocalStorage = function() {
   localStorage.clear();
-  console.log('local storage has been cleared.');
   window.location.reload();
 };
 
@@ -174,20 +169,21 @@ var makeChart = function() {
 //anonymous function that will check Local Storage for userData and assign the value to Product.all array, if not instantiate the Products
 (function() {
   if(localStorage.userData) {
-    var parsedUserData = JSON.parse(localStorage.userData);
+    var data = localStorage.getItem('userData');
+    var parsedUserData = JSON.parse(data);
+    console.log('parsedUserData: ', parsedUserData);
     for( var i = 0; i < parsedUserData.length; i++ ) {
       new Product(parsedUserData[i].name, parsedUserData[i].votes, parsedUserData[i].views);
-      console.log('reinstantiated objects!!!');
     }
-
-  } else {
-    //instantiate the Products through the constructor
-    for( var c = 0; c < Product.names.length; c++ ) {
-      new Product(Product.names[c]);
-    }
-  }
-  console.log('PRODUCT.ALL: ', Product.all );
-
+    console.log('Product.all exists: ', Product.all);
+  } 
+  // else {
+  //   //instantiate the Products through the constructor
+  //   for( var c = 0; c < Product.names.length; c++ ) {
+  //     new Product(Product.all[c].name, Product.all[c].votes, Product.all[c].views);
+  //   }
+    console.log('else Product.all instantiating new Products: ', Product.all);
+  // }
 })();
 
 //event listeners
