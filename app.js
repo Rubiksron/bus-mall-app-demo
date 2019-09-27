@@ -4,12 +4,15 @@
 Product.names = ['bag.jpg', 'banana.jpg', 'boots.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'pen.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 Product.all = [];
 Product.uniqueArray = [];
+Product.btnResetEl = document.getElementById('btnReset');
 Product.btnClearLS = document.getElementById('clear-local-storage');
 Product.container = document.getElementById('image-container');
 Product.tableDynamicEl = document.getElementById('table-dynamic');
-Product.pics = [document.getElementById('left'),
+Product.pics = [
+  document.getElementById('left'),
   document.getElementById('center'),
-  document.getElementById('right')];
+  document.getElementById('right')
+];
 Product.totalClicks = 0;
 
 //Product constructor, path is concatenating the image folder with the name and extension of the products, then is set as the src path in html
@@ -62,6 +65,7 @@ var handleClick = function(event) {
     }
     //showing the once hidden canvas and making the chart and table
     Product.btnClearLS.removeAttribute('hidden');
+    Product.btnResetEl.removeAttribute('hidden');
     canvas.removeAttribute('hidden');
     makeTable();
     makeChart();
@@ -81,6 +85,10 @@ var handleClick = function(event) {
   localStorage.userData = JSON.stringify(Product.all);
   //display pics if totalClicks is less than 5
   displayPics();
+};
+//reset the page
+var handleReset = function() {
+  window.location.reload();
 };
 
 //clear localStorage
@@ -156,6 +164,7 @@ var makeChart = function() {
 })();
 
 //event listeners
+Product.btnResetEl.addEventListener('click', handleReset)
 Product.container.addEventListener('click', handleClick);
 Product.btnClearLS.addEventListener('click', handleLocalStorage);
 displayPics();
