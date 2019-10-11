@@ -164,7 +164,7 @@ var makeChart = function() {
 })();
 
 //event listeners
-Product.btnResetEl.addEventListener('click', handleReset)
+Product.btnResetEl.addEventListener('click', handleReset);
 Product.container.addEventListener('click', handleClick);
 Product.btnClearLS.addEventListener('click', handleLocalStorage);
 displayPics();
