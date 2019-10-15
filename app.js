@@ -15,7 +15,8 @@ Product.pics = [
 ];
 Product.totalClicks = 0;
 
-//Product constructor, path is concatenating the image folder with the name and extension of the products, then is set as the src path in html
+//Product constructor, path is concatenating the image folder with the name and extension of the products, then is set as the src path in html.
+//votes and views are initialised at 0 for reinstantiation upon retrieval from local storage
 function Product(name, votes=0, views=0) {
   this.name = name;
   this.path = `images/${name}`;
@@ -29,7 +30,7 @@ var makeRandomNumber = function() {
   return Math.floor(Math.random() * Product.names.length);
 };
 
-function displayPics() {
+function uniqueArrayGenerator() {
   //keeps the array filled with 6 unique values
   while(Product.uniqueArray.length < 6) {
     var random = makeRandomNumber();
@@ -39,11 +40,16 @@ function displayPics() {
     }
   }
   console.log('uniqueArray completed!!: ', Product.uniqueArray);
+}
+
+function displayPics() {
+  uniqueArrayGenerator();
   for( var i = 0; i < Product.uniqueArray.length; i++ ) {
-  //value of the first index of the array is removed and set as the variable 'temp' and replaced at each iteration of the loop
+    //value of the first index of the array is removed and set as the variable 'temp' and replaced at each iteration of the loop
     var temp = Product.uniqueArray.shift();
     console.log('The Temp is #: ', temp);
     //sets the path of the product at the current index
+    // console.log('Product.all: ', Product.all);
     Product.pics[i].src = Product.all[temp].path;
     //sets the id of the product at the current index
     Product.pics[i].id = Product.all[temp].name;
@@ -57,9 +63,10 @@ function displayPics() {
 var handleClick = function(event) {
   //check to see if totalClicks is more than 5
   if(Product.totalClicks >= 5) {
+    //remove the event listener
     Product.container.removeEventListener('click', handleClick);
     Product.container.setAttribute('hidden', true);
-    //hiding the images after the survey has been completed
+    //for loop is hiding the images after the survey has been completed one at a time
     for( var i = 0; i < 3; i++ ){
       Product.pics[i].setAttribute('hidden', true);
     }
